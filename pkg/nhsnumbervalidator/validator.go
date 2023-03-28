@@ -59,6 +59,11 @@ func getMod11CheckDigit(num int) int {
 		}
 	}
 	remainder := sum % 11
+
 	checkDigit := 11 - remainder
+	if checkDigit == 11 {
+		return 0
+	}
+	
 	return checkDigit
 }
