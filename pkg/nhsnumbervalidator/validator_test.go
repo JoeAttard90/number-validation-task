@@ -57,3 +57,18 @@ func TestValidator_ValidateNHSNumber(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkValidator_ValidateNHSNumber(b *testing.B) {
+	validator := &NHSValidator{}
+	num := validator.GenerateValidNumber()
+	for n := 0; n < b.N; n++ {
+		_ = validator.ValidateNumber(num)
+	}
+}
+
+func BenchmarkValidator_GenerateValidNumber(b *testing.B) {
+	validator := &NHSValidator{}
+	for n := 0; n < b.N; n++ {
+		_ = validator.GenerateValidNumber()
+	}
+}
