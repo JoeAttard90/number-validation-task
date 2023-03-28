@@ -1,11 +1,11 @@
-package validation
+package nhsnumbervalidator
 
 import (
 	"testing"
 )
 
 func TestValidator_ValidateNHSNumber(t *testing.T) {
-	validator := &Validator{}
+	validator := &NHSValidator{}
 
 	tests := []struct {
 		name      string
@@ -39,19 +39,19 @@ func TestValidator_ValidateNHSNumber(t *testing.T) {
 		},
 		{
 			name:      "Validation_Successful_Generated_Value_1",
-			nhsNumber: validator.GenerateValidNHSNumber(),
+			nhsNumber: validator.GenerateValidNumber(),
 			wantErr:   false,
 		},
 		{
 			name:      "Validation_Successful_Generated_Value_2",
-			nhsNumber: validator.GenerateValidNHSNumber(),
+			nhsNumber: validator.GenerateValidNumber(),
 			wantErr:   false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := validator.ValidateNHSNumber(tt.nhsNumber); (err != nil) != tt.wantErr {
-				t.Errorf("ValidateNHSNumber() error = %validator, wantErr %validator", err, tt.wantErr)
+			if err := validator.ValidateNumber(tt.nhsNumber); (err != nil) != tt.wantErr {
+				t.Errorf("ValidateNumber() error = %v, wantErr %validator", err, tt.wantErr)
 			}
 		})
 	}
