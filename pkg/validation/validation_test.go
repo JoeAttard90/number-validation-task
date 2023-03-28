@@ -37,16 +37,16 @@ func TestValidator_ValidateNHSNumber(t *testing.T) {
 			nhsNumber: 4536016660,
 			wantErr:   true,
 		},
-		//{
-		//	name:      "Validation_Successful_Generated_Value_1",
-		//	nhsNumber: validator.GenerateValidNHSNumber(),
-		//	wantErr:   false,
-		//},
-		//{
-		//	name:      "Validation_Successful_Generated_Value_2",
-		//	nhsNumber: validator.GenerateValidNHSNumber(),
-		//	wantErr:   false,
-		//},
+		{
+			name:      "Validation_Successful_Generated_Value_1",
+			nhsNumber: validator.GenerateValidNHSNumber(),
+			wantErr:   false,
+		},
+		{
+			name:      "Validation_Successful_Generated_Value_2",
+			nhsNumber: validator.GenerateValidNHSNumber(),
+			wantErr:   false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
