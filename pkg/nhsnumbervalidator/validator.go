@@ -15,7 +15,7 @@ func NewValidator() (*NHSValidator, error) {
 	return &NHSValidator{}, nil
 }
 
-// ValidateNumber validates the nhs number for a patient using the modulus 11 algorithm. If the nhsnumbervalidator fails,
+// ValidateNumber validates the nhs number for a patient using the modulus 11 algorithm. If the validation fails,
 // an error is returned
 func (v *NHSValidator) ValidateNumber(num int) error {
 	numLength := len(strconv.Itoa(num))
@@ -30,12 +30,12 @@ func (v *NHSValidator) ValidateNumber(num int) error {
 	checksum := getMod11CheckDigit(num)
 
 	if checksum != checkDigit {
-		return fmt.Errorf("the nhs number provided - %d did not meeet the nhsnumbervalidator criteria", originalNum)
+		return fmt.Errorf("the nhs number provided - %d did not meet nhs number validation criteria", originalNum)
 	}
 	return nil
 }
 
-// GenerateValidNumber generates a 10-digit number which passes the nhs number nhsnumbervalidator criteria
+// GenerateValidNumber generates a 10-digit number which passes the nhs number validation criteria
 func (v *NHSValidator) GenerateValidNumber() int {
 	rand.Seed(time.Now().UnixNano())
 

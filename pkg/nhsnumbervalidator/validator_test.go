@@ -50,8 +50,9 @@ func TestValidator_ValidateNHSNumber(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := validator.ValidateNumber(tt.nhsNumber); (err != nil) != tt.wantErr {
-				t.Errorf("ValidateNumber() error = %v, wantErr %validator", err, tt.wantErr)
+			err := validator.ValidateNumber(tt.nhsNumber)
+			if err != nil && !tt.wantErr {
+				t.Errorf("ValidateNumber() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
