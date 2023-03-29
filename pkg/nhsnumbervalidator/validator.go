@@ -2,17 +2,21 @@ package nhsnumbervalidator
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"strconv"
 	"time"
 )
 
 type NHSValidator struct {
+	nhsNumLength int
 }
 
-// NewValidator creates a new NHSValidator object
-func NewValidator() (*NHSValidator, error) {
-	return &NHSValidator{}, nil
+// NewNHSValidator creates a new NHSValidator object
+func NewNHSValidator(nhsNumLength int) (*NHSValidator, error) {
+	return &NHSValidator{
+		nhsNumLength: nhsNumLength,
+	}, nil
 }
 
 // ValidateNumber validates the nhs number for a patient using the modulus 11 algorithm. If the validation fails,
@@ -20,8 +24,8 @@ func NewValidator() (*NHSValidator, error) {
 func (v *NHSValidator) ValidateNumber(num int) error {
 	numLength := len(strconv.Itoa(num))
 	originalNum := num
-	if numLength != 10 {
-		return fmt.Errorf("expected a digit of length 10, got digit of length - %d", numLength)
+	if numLength != v.nhsNumLength {
+		return fmt.Errorf("expected a digit of length %d, got digit of length - %d", v.nhsNumLength, numLength)
 	}
 
 	checkDigit := num % 10
@@ -32,6 +36,8 @@ func (v *NHSValidator) ValidateNumber(num int) error {
 	if checksum != checkDigit {
 		return fmt.Errorf("the nhs number provided - %d did not meet nhs number validation criteria", originalNum)
 	}
+
+	log.Printf("[info] successfully validated nhs number - %d", originalNum)
 	return nil
 }
 
@@ -44,8 +50,11 @@ func (v *NHSValidator) GenerateValidNumber() int {
 	originalNum := num
 
 	checkDigit := getMod11CheckDigit(num)
+	generatedNHSNumber := originalNum*10 + checkDigit
 
-	return originalNum*10 + checkDigit
+	log.Printf("[info] successfully generated nhs number - %d", generatedNHSNumber)
+
+	return generatedNHSNumber
 }
 
 func getMod11CheckDigit(num int) int {
@@ -64,6 +73,6 @@ func getMod11CheckDigit(num int) int {
 	if checkDigit == 11 {
 		return 0
 	}
-	
+
 	return checkDigit
 }
