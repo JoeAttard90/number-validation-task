@@ -5,7 +5,9 @@ import (
 )
 
 func TestValidator_ValidateNHSNumber(t *testing.T) {
-	validator := &NHSValidator{}
+	validator := &NHSValidator{
+		nhsNumLength: 10,
+	}
 
 	tests := []struct {
 		name      string
@@ -59,7 +61,9 @@ func TestValidator_ValidateNHSNumber(t *testing.T) {
 }
 
 func BenchmarkValidator_ValidateNHSNumber(b *testing.B) {
-	validator := &NHSValidator{}
+	validator := &NHSValidator{
+		nhsNumLength: 10,
+	}
 	num := validator.GenerateValidNumber()
 	for n := 0; n < b.N; n++ {
 		_ = validator.ValidateNumber(num)
@@ -67,7 +71,9 @@ func BenchmarkValidator_ValidateNHSNumber(b *testing.B) {
 }
 
 func BenchmarkValidator_GenerateValidNumber(b *testing.B) {
-	validator := &NHSValidator{}
+	validator := &NHSValidator{
+		nhsNumLength: 10,
+	}
 	for n := 0; n < b.N; n++ {
 		_ = validator.GenerateValidNumber()
 	}
