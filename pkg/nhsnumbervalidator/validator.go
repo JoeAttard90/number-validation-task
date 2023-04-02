@@ -44,13 +44,20 @@ func (v *NHSValidator) ValidateNumber(num int) error {
 // GenerateValidNumber generates a 10-digit number which passes the nhs number validation criteria
 func (v *NHSValidator) GenerateValidNumber() int {
 	rand.Seed(time.Now().UnixNano())
+	var generatedNHSNumber int
 
-	// Generate the first 9 digits randomly
-	num := rand.Intn(900000000) + 100000000
-	originalNum := num
+	for {
+		// Generate the first 9 digits randomly
+		num := rand.Intn(900000000) + 100000000
+		originalNum := num
 
-	checkDigit := getMod11CheckDigit(num)
-	generatedNHSNumber := originalNum*10 + checkDigit
+		checkDigit := getMod11CheckDigit(num)
+		if checkDigit >= 10 {
+			continue
+		}
+		generatedNHSNumber = originalNum*10 + checkDigit
+		break
+	}
 
 	log.Printf("[info] successfully generated nhs number - %d", generatedNHSNumber)
 
